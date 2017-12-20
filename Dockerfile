@@ -8,6 +8,8 @@ ENV cmake_file=3.10.1
 ENV boost_dir=1.65.1
 ENV boost_file=1_65_1
 
+ENV BOOST_ROOT=/opt/local
+
 RUN apt-get update && apt-get install -y \
 	apt-utils \
 	wget \
@@ -26,17 +28,16 @@ RUN cd /opt \
 	&& ln -s /opt/cmake-${cmake_file}-Linux-x86_64/bin/ctest /usr/local/bin/ctest
 
 # install boost
-#RUN apt-get update && apt-get install -y libboost-all-dev
-#RUN cd /opt \
-#	&& wget https://dl.bintray.com/boostorg/release/${boost_dir}/source/boost_${boost_file}.tar.bz2 \
-#	&& tar -xf boost_${boost_file}.tar.bz2 \
-#	&& rm -f boost_${boost_file}.tar.bz2 \
-#	&& cd boost_${boost_file} \
-#	&& ./bootstrap.sh --prefix=/opt/local \
-#	&& ./b2 -j2 --prefix=/opt/local threading=multi variant=release optimization=space install \
-#	&& cd /opt \
-#	&& rm -fr boost_${boost_file}
+RUN cd /opt \
+	&& wget https://dl.bintray.com/boostorg/release/${boost_dir}/source/boost_${boost_file}.tar.bz2 \
+	&& tar -xf boost_${boost_file}.tar.bz2 \
+	&& rm -f boost_${boost_file}.tar.bz2 \
+	&& cd boost_${boost_file} \
+	&& ./bootstrap.sh --prefix=/opt/local --with-libraries=system  \
+	&& ./b2 -j3 --prefix=/opt/local threading=multi variant=release optimization=space install \
+	&& cd /opt \
+	&& rm -fr boost_${boost_file}
 
 # install Qt5 development package
-#RUN apt-get update && apt-get install -y libqt5*-dev
+RUN apt-get update && apt-get install -y libqt5*-dev
 
