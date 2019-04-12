@@ -1,10 +1,11 @@
 #!/bin/bash -e
 
-if [ $# -gt 1 ] ; then
-	cmd="bash -c \"${@:2}\""
-elif [ $# -eq 1 ] ; then
-	cmd='bash'
+if [ $# -lt 1 ] ; then
+	echo "usage: $(basename $0) container-id [args...]"
+	exit 1
 fi
+
+[[ $# == 1 ]] && arg="" || arg="-c"
 
 docker run \
 	--interactive \
@@ -16,4 +17,4 @@ docker run \
 	--env HOME=$(pwd) \
 	--user $(id -u):$(id -g) \
 	${1} \
-	${cmd}
+	bash ${arg} "${@:2}"
