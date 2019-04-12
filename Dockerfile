@@ -6,7 +6,7 @@ ARG cmake_version=3.13.4
 ARG boost_version=1.69.0
 
 USER root
-RUN apt-get update && apt-get install -y apt-utils wget curl git-core \
+RUN apt-get update && apt-get install -y apt-utils curl git-core libqt5*-dev \
 	&& rm -fr /var/lib/apt/lists/*
 RUN mkdir -p /opt
 
@@ -19,9 +19,6 @@ ENV PATH /opt/local/cmake/bin:$PATH
 COPY install-boost.sh /tmp/
 RUN /tmp/install-boost.sh "${boost_version}"
 ENV BOOST_ROOT=/opt/local
-
-# install Qt5 development package
-RUN apt-get update && apt-get install -y libqt5*-dev
 
 # add user
 RUN useradd --groups users -M --uid 1000 user
