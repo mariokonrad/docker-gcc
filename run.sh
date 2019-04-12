@@ -1,5 +1,11 @@
 #!/bin/bash -e
 
+if [ $# -gt 1 ] ; then
+	cmd="bash -c \"${@:2}\""
+elif [ $# -eq 1 ] ; then
+	cmd='bash'
+fi
+
 docker run \
 	--interactive \
 	--tty \
@@ -9,6 +15,5 @@ docker run \
 	--workdir $(pwd) \
 	--env HOME=$(pwd) \
 	--user $(id -u):$(id -g) \
-	$1 \
-	bash
-
+	${1} \
+	${cmd}
