@@ -6,8 +6,9 @@ ARG cmake_version=3.13.4
 ARG boost_version=1.69.0
 
 USER root
-RUN apt-get update && apt-get install -y apt-utils curl git-core libqt5*-dev \
-	&& rm -fr /var/lib/apt/lists/*
+RUN apt-get update \
+ && apt-get install -y apt-utils curl git-core libqt5*-dev \
+ && rm -fr /var/lib/apt/lists/*
 RUN mkdir -p /opt
 
 # install cmake
