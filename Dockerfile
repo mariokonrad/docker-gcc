@@ -1,4 +1,4 @@
-ARG gcc_version=8.3.0
+ARG gcc_version=9.1.0
 FROM gcc:${gcc_version}
 MAINTAINER Mario Konrad <mario.konrad@gmx.net>
 
